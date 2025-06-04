@@ -16,6 +16,15 @@ function connectElgatoStreamDeckSocket(inPort, inPluginUUID, inRegisterEvent, in
         };
 
         websocket.send(JSON.stringify(json));
+
+        // Retrieve global settings (e.g., Maker Key) immediately after
+        // connecting so they are available for the first key press
+        const getGlobalSettings = {
+            "event": "getGlobalSettings",
+            "context": pluginUUID
+        };
+
+        websocket.send(JSON.stringify(getGlobalSettings));
     };
 
     websocket.onmessage = function (evt) {
